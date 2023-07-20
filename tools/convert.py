@@ -16,20 +16,20 @@ def covert_img() -> str:
     image = cv2.imread(PARAMS['pathToImg'])
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-    if "thresh" in PARAMS["preprocess"]:
+    if 'Thresh'in PARAMS['preprocess']:
         gray = cv2.threshold(gray, 0, 255,
                              cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
 
-    if "blur" in PARAMS["preprocess"]:
+    if 'Blur'in PARAMS['preprocess']:
         gray = cv2.medianBlur(gray, 3)
 
-    filename = path.join("../tmp", f"{getpid()}.png")
+    filename = path.join('../tmp', f'{getpid()}.png')
     cv2.imwrite(filename, gray)
-    # cv2.imshow("Output", gray)
-    text = pytesseract.image_to_string(Image.open(filename), lang=PARAMS["language"])
+    # cv2.imshow('Output' gray)
+    text = pytesseract.image_to_string(Image.open(filename), lang=PARAMS['Language'])
     remove(filename)
     print(text)
-    # input("pause…")
+    # input('Pause…'
     return text
 
 
