@@ -1,3 +1,5 @@
+import os
+
 import cv2
 import pytesseract
 import re
@@ -16,6 +18,8 @@ def covert_img() -> str:
     Recognize text from image
     :return: Characters found in image
     """
+    if not path.isdir('../tmp'):
+        os.mkdir('../tmp')
     image = cv2.imread(PARAMS['pathToImg'])
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
