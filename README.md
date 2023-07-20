@@ -12,9 +12,9 @@ pip install -r requirements.txt
 Edit **"config.json"**:    
 1) **"pathToImg"** - Absolute path to source image
 2) **"preprocess"** - (DEV TOOL! DON'T EDIT!) - settings for image processing
-3) **"language"** - language to recognize (**'rus+eng'** by default)
+3) **"language"** - language to recognize (**'eng'** by default)
 
 ## Launch
 ```commandline
-python ./tools/convert.py
+python -m tools.convert
 ```
