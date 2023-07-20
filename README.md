@@ -16,5 +16,5 @@ Edit **"config.json"**:
 
 ## Launch
 ```commandline
-python -m tools.convert
+python -m main
 ```
