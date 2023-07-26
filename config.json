@@ -1,5 +1,1 @@
-{
-  "pathToImg": "C:\\Users\\Danil\\Documents\\Projects\\WhatsApp-Bot\\data\\image.jpg",
-  "preprocess": "",
-  "language": "eng"
-}
+{"type": "passport", "path": "C:\\Users\\Danil\\Documents\\Projects\\WhatsApp-Bot\\data\\passport.jpg", "preprocess": "", "language": "rus"}
