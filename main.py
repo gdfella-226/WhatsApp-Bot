@@ -1,13 +1,10 @@
 from tools.convert import convert
+from tools.DBHandler import DBHanler
+from tools.PATHS import *
 from os import listdir, path
 from json import dump, load
 from loguru import logger
 import sqlite3
-
-
-IMG_PATH = path.join('./', 'data')
-CONFIG_PATH = path.join('./', 'config.json')
-DB_PATH = path.join('./', 'database.db')
 
 
 def db_handler() -> None:
@@ -24,6 +21,7 @@ def upd_params(new_params: dict) -> None:
 
 
 def main() -> None:
+    db = DBHanler(DB_PATH)
     new_line = dict()
     for filename in listdir(IMG_PATH):
         logger.debug(f'Found img: {filename}')
@@ -43,6 +41,8 @@ def main() -> None:
             continue
         new_line.update(convert())
     logger.success(new_line)
+    if new_line:
+        db.push(new_line)
 
 
 if __name__ == '__main__':

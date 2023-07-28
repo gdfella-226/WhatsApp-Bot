@@ -1,21 +1,29 @@
 # WhatsApp-Bot
 
 ## Install dependencies
+
 Install "Tesseract OCR" on your PC:   
 Binaries for Windows: https://digi.bib.uni-mannheim.de/tesseract/?ref=nanonets.com
+Install "SQLite DB Browser" to visualize database
+Installer for windows: https://sqlitebrowser.org/dl/
 ```commandline
 pip install -r requirements.txt
 ```
 
-## Set parameters
+## Setup
 
-Edit **"config.json"**:
-1) **type** - Type of the document (passport/credit/insurance/additional)
-2) **"path"** - Absolute path to source image
-3) **"preprocess"** - (DEV TOOL! DON'T EDIT!) - settings for image processing
-4) **"language"** - language to recognize (**'eng'** by default)
+Put images to directory ```PATH/TO/PROJECT/WhatsApp-Bot/data/```  
+All side parameters set automatically
 
 ## Launch
+
 ```commandline
 python -m main
 ```
+
+## Result
+
+1) Copy path to database: ```PATH/TO/PROJECT/WhatsApp-Bot/database.db```
+2) Open "DB Browser (SQLite)":
+3) Use 'File' -> 'Open DB' -> copied path to file
+![DB Result](./Screenshots/db1.png)

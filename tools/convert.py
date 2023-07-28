@@ -12,9 +12,7 @@ from shutil import rmtree
 from PIL import Image
 from loguru import logger
 from tools.vocabulary import encode_name
-
-
-CONFIG_PATH = path.abspath(path.join('./', 'config.json'))
+from tools.PATHS import CONFIG_PATH
 
 
 def clear_directory(folder: str) -> None:
@@ -116,10 +114,10 @@ def parse_passport(chars: str) -> dict:
     res = dict()
     res['full_name'] = ' '.join([encode_name(i) for i in arr[0][5::].split('<') if i][0:3])
     res['birth_date'] = birth_date
-    res['pass_ser_num'] = arr[1][0:3] + arr[1][30] + '-' + arr[1][3:9]
+    res['passport_ser_num'] = arr[1][0:3] + arr[1][30] + '-' + arr[1][3:9]
     try:
-        res['pass_extr_code'] = search(r'\d\d\d-\d\d\d', chars).group()
-        res['pass_extr_date'] = search(r'\d\d\.\d\d\.\d\d\d\d', chars).group()
+        res['passport_extr_code'] = search(r'\d\d\d-\d\d\d', chars).group()
+        res['passport_extr_date'] = search(r'\d\d\.\d\d\.\d\d\d\d', chars).group()
         logger.debug(f'Success! {res}')
     except Exception as err:
         logger.error(f'Failed to parse extradition data: {err}')
@@ -140,11 +138,11 @@ def parse_credit(chars: str) -> dict:
     for line in arr:
         line.replace('\n', '')
         if search(r'договор\w*№', line):
-            res["credit_number"] = line[line.find('№') + 1::].upper()
+            res["credit_contract_number"] = line[line.find('№') + 1::].upper()
         elif "сумма:" in line:
             res["credit_sum"] = line[line.find(':') + 1: line.find('рублей')] + " рублей"
         elif "срокполноговозвратакредита" in line:
-            res["credit_term"] = line[line.find('составляет') + 10: line.find('месяц')] + " месяцев"
+            res["credit_contract_term"] = line[line.find('составляет') + 10: line.find('месяц')] + " месяцев"
     logger.debug(f'Success! {res}')
     return res
 
@@ -161,14 +159,14 @@ def parse_insurance(chars: str) -> dict:
     try:
         for line in arr:
             if search(r':.\w*', line):
-                res['ins_ser_num'] = search(r':.\w*', line).group()[2::]
+                res['insurance_contract_num'] = search(r':.\w*', line).group()[2::]
                 break
                 # date = line[line.find('ОТ')+2::]
                 # print(date)
         logger.debug(f'Success! {res}')
     except Exception as err:
         logger.error(f'Failed to parse data: {err}')
-        res['ins_ser_num'] = '?????'
+        res['insurance_contract_num'] = '?????'
     return res
 
 
@@ -189,12 +187,12 @@ def parse_additional(chars: str) -> dict:
                 for i in found:
                     if i.isdigit():
                         ser_num += i
-                res['add_ser_num'] = ser_num
+                res['additional_services_contract_num'] = ser_num
                 break
         logger.debug(f'Success! {res}')
     except Exception as err:
         logger.error(f'Failed to parse data: {err}')
-        res['add_ser_num'] = '?????'
+        res['additional_services_contract_num'] = '?????'
     return res
 
 
@@ -216,7 +214,7 @@ def convert():
     # logger.debug(data)
 
     # input('pause...')
-    clear_directory('../tmp')
+    clear_directory('./tmp')
     return data
 
 

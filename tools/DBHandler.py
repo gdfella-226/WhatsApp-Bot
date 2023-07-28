@@ -1,5 +1,4 @@
 from loguru import logger
-from os import path
 import sqlite3
 
 
@@ -30,17 +29,20 @@ class DBHanler:
             print(names)
             for i in names:
                 if i not in list(data.keys()) and i != 'id':
-                    data[i] = 'None'
+                    data[i] = '?????'
         except Exception as err:
             logger.error(f'Comparing error: {err}')
         try:
-            self.cur.execute(f"""INSERT INTO data (full_name, birth_date, passport_ser_num, passport_extr_date, 
-                                passport_extr_code, credit_contract_number, credit_contract_term, 
-                                insurance_contract_num, additional_services_contract_num) VALUES 
-                                ('{data["full_name"]}', '{data["birth_date"]}', '{data["passport_ser_num"]}',
-                                '{data["passport_extr_date"]}', '{data["passport_extr_code"]}', 
-                                '{data["credit_contract_number"]}', '{data["credit_contract_term"]}', 
-                                '{data["insurance_contract_num"]}', '{data["additional_services_contract_num"]}');""")
+            sql = f"""INSERT INTO data (full_name, birth_date, passport_ser_num, passport_extr_date, 
+passport_extr_code, credit_contract_number, credit_contract_term, 
+insurance_contract_num, additional_services_contract_num) VALUES 
+('{data["full_name"]}', '{data["birth_date"]}', '{data["passport_ser_num"]}',
+'{data["passport_extr_date"]}', '{data["passport_extr_code"]}', 
+'{data["credit_contract_number"]}', '{data["credit_contract_term"]}', 
+'{data["insurance_contract_num"]}', '{data["additional_services_contract_num"]}');"""
+            self.cur.execute(sql)
+            self.conn.commit()
+            logger.debug('Successfully insert data to DB!')
         except Exception as err:
             logger.error(f'Database error: {err}')
 
@@ -59,7 +61,7 @@ if __name__ == "__main__":
           'passport_extr_code': '610_069'
     }
 
-    DB_PATH = path.join('../', 'database.db')
+    DB_PATH = "C:\\Users\\Danil\\Documents\\Projects\\WhatsApp-Bot\\database.db"
     dbh = DBHanler(DB_PATH)
     dbh.push(TEST_DATA)
     dbh.clear()
