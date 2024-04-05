@@ -1,5 +1,6 @@
 # WhatsApp-Bot
-
+WA Bot parsing personal/credit documents to generate reports and contracts    
+*Bot is currently disabled due to Meta politics, but generative part is stable*
 ## Install dependencies
 
 Install "Tesseract OCR" on your PC:   
